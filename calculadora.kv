@@ -1,0 +1,255 @@
+#:kivy 2.0
+
+<CalculadoraScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: 0, 0, 0, 1
+        padding: "12dp"
+        spacing: "10dp"
+
+        # ---------------------------------------------------------------
+        # Barra superior: título, historial y botón de modo científico
+        # ---------------------------------------------------------------
+        MDBoxLayout:
+            size_hint_y: None
+            height: "48dp"
+            spacing: "6dp"
+
+            MDLabel:
+                text: "Calculadora Científica"
+                bold: True
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+
+            MDIconButton:
+                icon: "history"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                on_release: root.mostrar_historial()
+
+            MDIconButton:
+                id: btn_modo
+                icon: "calculator-variant"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                on_release: root.alternar_modo_cientifico()
+
+        # ---------------------------------------------------------------
+        # Pantalla de resultados
+        # ---------------------------------------------------------------
+        MDCard:
+            size_hint_y: None
+            height: "90dp"
+            radius: [20]
+            md_bg_color: 0.12, 0.12, 0.12, 1
+            padding: "10dp"
+
+            MDTextField:
+                id: pantalla
+                text: ""
+                readonly: True
+                multiline: False
+                font_size: "32sp"
+                halign: "right"
+                mode: "fill"
+
+        # ---------------------------------------------------------------
+        # Panel científico (oculto por defecto, se despliega con animación)
+        # ---------------------------------------------------------------
+        MDBoxLayout:
+            id: panel_cientifico
+            orientation: "vertical"
+            size_hint_y: None
+            height: 0
+            opacity: 0
+
+            GridLayout:
+                cols: 5
+                spacing: "4dp"
+                size_hint_y: None
+                height: self.minimum_height
+                row_force_default: True
+                row_default_height: "40dp"
+
+                Button:
+                    text: "sin"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("sin(")
+
+                Button:
+                    text: "cos"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("cos(")
+
+                Button:
+                    text: "tan"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("tan(")
+
+                Button:
+                    text: "log"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("log10(")
+
+                Button:
+                    text: "ln"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("log(")
+
+                Button:
+                    text: "\u221a"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("sqrt(")
+
+                Button:
+                    text: "x\u00b2"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("**2")
+
+                Button:
+                    text: "x^y"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("**")
+
+                Button:
+                    text: "\u03c0"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("pi")
+
+                Button:
+                    text: "e"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("e")
+
+                Button:
+                    text: "n!"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("!")
+
+                Button:
+                    text: "|x|"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("abs(")
+
+                Button:
+                    text: "\u00b1"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.cambiar_signo()
+
+                Button:
+                    text: "("
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar("(")
+
+                Button:
+                    text: ")"
+                    background_color: 0.22, 0.22, 0.22, 1
+                    on_release: root.agregar(")")
+
+        # ---------------------------------------------------------------
+        # Teclado básico (siempre visible)
+        # ---------------------------------------------------------------
+        GridLayout:
+            cols: 4
+            spacing: "8dp"
+
+            Button:
+                text: "C"
+                background_color: 0.55, 0.15, 0.15, 1
+                on_release: root.limpiar()
+
+            Button:
+                text: "DEL"
+                background_color: 0.55, 0.15, 0.15, 1
+                on_release: root.borrar_ultimo()
+
+            Button:
+                text: "%"
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.agregar("%")
+
+            Button:
+                text: "/"
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.agregar("/")
+
+            Button:
+                text: "7"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("7")
+
+            Button:
+                text: "8"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("8")
+
+            Button:
+                text: "9"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("9")
+
+            Button:
+                text: "*"
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.agregar("*")
+
+            Button:
+                text: "4"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("4")
+
+            Button:
+                text: "5"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("5")
+
+            Button:
+                text: "6"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("6")
+
+            Button:
+                text: "-"
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.agregar("-")
+
+            Button:
+                text: "1"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("1")
+
+            Button:
+                text: "2"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("2")
+
+            Button:
+                text: "3"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("3")
+
+            Button:
+                text: "+"
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.agregar("+")
+
+            Button:
+                text: "0"
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar("0")
+
+            Button:
+                text: "."
+                background_color: 0.35, 0.35, 0.35, 1
+                on_release: root.agregar(".")
+
+            Button:
+                text: ""
+                background_color: 0, 0, 0, 0
+                disabled: True
+
+            Button:
+                text: "="
+                background_color: 1, 0.39, 0.28, 1
+                on_release: root.calcular()
